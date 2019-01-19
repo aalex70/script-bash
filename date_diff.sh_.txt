@@ -1,0 +1,48 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+        echo Usage:
+        echo "  $(basename $0) <datetime begin> <datetime end>"
+        echo Example:
+        echo "  $(basename $0) '2012-08-12 15:34:59' '2012-08-13 01:23:45'"
+        echo "  $(basename $0) '2012-08-12 15:34:59' 2012-08-13"
+        echo "  $(basename $0) '2012-08-11 now"
+        echo
+        exit 1
+fi
+
+START="$1"
+STOP="$2"
+
+START_TS=$(date +'%s' -d "$START")
+STOP_TS=$(date +'%s' -d "$STOP")
+
+if [[ $STOP_TS -lt $START_TS ]]; then
+        echo "$(basename $0): min > max" >&2
+        exit 9
+fi
+
+ORE=$((($STOP_TS - $START_TS) / 3600 ))
+MIN=$(((($STOP_TS - $START_TS) / 60 ) % 60))
+SEC=$((($STOP_TS - $START_TS) % 60 ))
+
+if [[ $ORE -gt 24 ]]; then
+        GIORNI=$(( $ORE / 24 ))
+        ORE_RIMANENTI=$(( $ORE % 24 ))
+        if [[ $GIORNI -gt 1 ]];then
+                DURATA="$GIORNI days $ORE_RIMANENTI:$MIN:$SEC"
+        else
+                DURATA="$GIORNI day $ORE_RIMANENTI:$MIN:$SEC"
+        fi
+else
+        DURATA="$ORE:$MIN:$SEC"
+fi
+
+echo ""
+echo "Begin    : $(date +'%d-%m-%Y %H:%M:%S' -d@$START_TS)"
+echo "End      : $(date +'%d-%m-%Y %H:%M:%S' -d@$STOP_TS)"
+echo ""
+echo "Duration : $DURATA ($(echo $ORE:$MIN:$SEC) hours) ($(($STOP_TS - $START_TS)) seconds)"
+echo ""
+
+# vim: ts=2 sw=2 background=dark
