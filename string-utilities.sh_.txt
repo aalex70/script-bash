@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+
+# Bash Utility
+#
+# Copyright (C) 2018 Alessandro Alfonsi
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+#
+
+## Examples
+#
+
+STRING="Abcdez"
+DEC="97"
+
+## Function
+#
+
+count_str() {
+# count_str() - returns the lentgh of a string
+        local str="$1"
+        echo "${#str}"
+}
+
+ord() {
+# ord() - converts ASCII character to its decimal value
+        local char="$1"
+        printf "%d" "'${char}"
+}
+
+
+chr() {
+# chr() - converts decimal value to its ASCII character representation
+        local num="$1"
+        printf '%b' "$(printf '\%03o' "${num}")"
+}
+
+to_upper() {
+# to_upper() - returns an uppercase string
+        local str="$1"
+        echo "${str}" | tr '[:lower:]' '[:upper:]'
+}
+
+to_lower() {
+# to_lower() - returns a lowercase string
+        local str="$1"
+        echo "${str}" | tr '[:upper:]' '[:lower:]'
+}
+
+rot1() {
+# rot1() - encrypt a string with rot1 (replace each letter with the letter 1 position after)
+        local str="$1"
+        echo "${str}" | tr 'a-zA-Z' 'b-zaB-ZA'
+}
+
+rot13() {
+# rot13() - encrypt a string with rot13 (replace each letter with the letter 13 position after)
+        local str="$1"
+        echo "${str}" | tr 'a-zA-Z' 'n-za-mN-ZA-M'
+}
+
+## Main
+#
+
+FIRST_CHR="${STRING:0:1}"
+
+echo "String: ${STRING}"
+echo "String length: $(count_str "${STRING}")"
+echo "First character of the string: ${FIRST_CHR}"
+echo "Ord of character ${FIRST_CHR}: $(ord "${FIRST_CHR}")"
+echo "Chr of number ${DEC}: $(chr "${DEC}")"
+echo "Convert a string to uppercase: $(to_upper "${STRING}")"
+echo "Convert a string to lowercase: $(to_lower "${STRING}")"
+echo "Encrypt a string with ROT1: $(rot1 "${STRING}")"
+echo "Encrypt a string with ROT13: $(rot13 "${STRING}")"
+
+# vim: ts=2 sw=2 noet ai nohls
