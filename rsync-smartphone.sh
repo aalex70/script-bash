@@ -16,8 +16,9 @@ if  [ -z "$1"  ]; then
 fi
 
 DEVICE=$1
+HOME="/home/${USER}"
 ORIG=$(mount | grep gvfs | awk '{ print $3 }')
-DEST="/home/alex/${DEVICE}"
+DEST="${HOME}/${DEVICE}"
 [ ! -d $DEST ] && mkdir -p $DEST
 cd $ORIG
 cd *
