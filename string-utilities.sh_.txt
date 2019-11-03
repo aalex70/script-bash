@@ -24,6 +24,7 @@
 
 STRING="Abcdez"
 DEC="97"
+URL="mtp:host=%5Busb%3A001%2C009%5D"
 
 ## Function
 #
@@ -71,6 +72,11 @@ rot13() {
         echo "${str}" | tr 'a-zA-Z' 'n-za-mN-ZA-M'
 }
 
+urldecode() {
+# urldecode() - decode a URL
+	: "${*//+/ }"; echo -e "${_//%/\\x}";
+}
+
 ## Main
 #
 
@@ -85,5 +91,6 @@ echo "Convert a string to uppercase: $(to_upper "${STRING}")"
 echo "Convert a string to lowercase: $(to_lower "${STRING}")"
 echo "Encrypt a string with ROT1: $(rot1 "${STRING}")"
 echo "Encrypt a string with ROT13: $(rot13 "${STRING}")"
+echo "Decode a URL: $(urldecode "${URL}")"
 
 # vim: ts=2 sw=2 noet ai nohls
