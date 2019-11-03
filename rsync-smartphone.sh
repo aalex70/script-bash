@@ -20,8 +20,15 @@ HOME="/home/${USER}"
 ORIG=$(mount | grep gvfs | awk '{ print $3 }')
 DEST="${HOME}/${DEVICE}"
 [ ! -d $DEST ] && mkdir -p $DEST
+FOUND="$(find $ORIG -maxdepth 1 -name 'mtp*' -type d | wc -l)"
+if [ $FOUND -eq 0 ];then
+	echo "Error: Device not found - File system gvfs not mounted"
+	exit 10
+else
+	echo "Found: $FOUND device"
+fi
 cd $ORIG
-cd *
+cd mtp*
 CWD=$(pwd)
 
 while read LINE; do
