@@ -24,8 +24,12 @@ FOUND="$(find $ORIG -maxdepth 1 -name 'mtp*' -type d | wc -l)"
 if [ $FOUND -eq 0 ];then
 	echo "Error: Device not found - File system gvfs not mounted"
 	exit 10
-else
-	echo "Found: $FOUND device"
+elif [ $FOUND -gt 1 ];then
+	echo "Error: Found $FOUND devices"
+	echo "Disconect one or more devices; you must have only one connected device"
+	exit 11
+elif [ $FOUND -eq 1 ];then
+	echo "OK: Found $FOUND devices"
 fi
 cd $ORIG
 cd mtp*
