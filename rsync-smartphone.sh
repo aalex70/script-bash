@@ -41,9 +41,12 @@ while read LINE; do
 	cd "$CWD/${LINE}"
 	pwd
 	# exclude ".Statuses" WhapsApp directory because rsync returns read errors failed verification
-	rsync -av --exclude '*.Statuses*' . "${DEST}/${LINE}"
+	rsync -av --exclude '*.Statuses*' --exclude '.thumbnails' --exclude '.aux' --exclude '*.db.crypt*' . "${DEST}/${LINE}"
 done < <(find . -maxdepth 3 -name 'WhatsApp' -o \
 	-name 'DCIM' -o \
+	-name 'Music' -o \
+	-name 'Screenshots' -o \
+	-name 'Video' -o \
 	-name 'Pictures' -type d)
 
 # vim: ts=2 sw=2 noet ai nohls
