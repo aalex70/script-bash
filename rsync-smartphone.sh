@@ -47,6 +47,16 @@ done < <(find . -maxdepth 3 -name 'WhatsApp' -o \
 	-name 'Music' -o \
 	-name 'Screenshots' -o \
 	-name 'Video' -o \
+	-name 'Movies' -o \
+	-iname 'bluetooth' -o \
+	-name 'Download' -o \
+	-name 'Documents' -o \
+	-name 'kpx' -o \
+	-name 'mycar' -o \
+	-name 'Telegram' -o \
+	-name 'Threema' -o \
 	-name 'Pictures' -type d)
+
+# togliere mycar, kpx, Threema e Telegram se non sono installati
 
 # vim: ts=2 sw=2 noet ai nohls
